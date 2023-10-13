@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Question"
+        android:textSize="@dimen/question_size" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_answers"
+        android:paddingRight="@dimen/padding_answers"
+        android:layout_marginTop="@dimen/margin_bottom_question">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/btn_1"
+                android:text="number 1"
+                android:layout_weight="1"
+                android:textSize="@dimen/answer_size" />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:text="number 2"
+                android:layout_weight="1"
+                android:textSize="@dimen/answer_size" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/btn_3"
+                android:text="number 3"
+                android:layout_weight="1"
+                android:textSize="@dimen/answer_size" />
+
+            <Button
+                android:id="@+id/btn_4"
+                android:text="number 4"
+                android:layout_weight="1"
+                android:textSize="@dimen/answer_size" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/btn_5"
+                android:text="number 5"
+                android:layout_weight="1"
+                android:textSize="@dimen/answer_size" />
+
+            <Button
+                android:id="@+id/btn_6"
+                android:text="number 6"
+                android:layout_weight="1"
+                android:textSize="@dimen/answer_size" />
+        </TableRow>
+    </TableLayout>
+    <TextView
+        android:layout_marginTop="@dimen/margin_bottom_answers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_result"
+        android:text="result"
+        android:textSize="@dimen/result_size" />
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_kanji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="展"
+        android:textSize="100dp" />
+
+    <TextView
+        android:id="@+id/dialog_korean"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="하늘 천"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/dialog_onDoku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="음독 : "
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/dialog_kunDoku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="훈독 : "
+        android:textSize="22dp" />
+
+    <Button
+        android:id="@+id/dialog_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:textSize="18dp" />
+</LinearLayout>
