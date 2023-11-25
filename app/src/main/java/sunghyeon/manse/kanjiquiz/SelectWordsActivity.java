@@ -3,6 +3,9 @@ package sunghyeon.manse.kanjiquiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,18 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class SelectWordsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+
+    private GridView mKanjiGridView;
+
+    private Button mSelectOkButton;
+    private Button mSelectCancelButton;
+
+    private final QuizManager quizManager = QuizManager.getInstance();
+
+    private KanjiAdapter kanjiAdapter;
+
+    private KanjiDataContainer kanjiDataContainer=KanjiDataContainer.getInstance();
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         KanjiAdapter adapter = (KanjiAdapter) parent.getAdapter();
@@ -26,9 +41,9 @@ public class SelectWordsActivity extends AppCompatActivity implements AdapterVie
         rowData.setIsChecked(checkedState);
 
         if (checkedState) {
-            mSelectedKanjiList.add(rowData);
+            quizManager.addKanjiIndex(position);
         } else {
-            mSelectedKanjiList.remove(rowData);
+            quizManager.removeKanjiIndex(position);
         }
 
         adapter.notifyDataSetChanged();
@@ -38,7 +53,7 @@ public class SelectWordsActivity extends AppCompatActivity implements AdapterVie
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_cell, null);
 
-        KanjiData kanjiData = mKanjiList.get(position);
+        KanjiData kanjiData = kanjiDataContainer.getKanjiData(position);
 
         TextView dialogKanji = dialogView.findViewById(R.id.dialog_kanji);
         TextView dialogKorean = dialogView.findViewById(R.id.dialog_korean);
@@ -75,26 +90,15 @@ public class SelectWordsActivity extends AppCompatActivity implements AdapterVie
         return true;
     }
 
-    private GridView mKanjiGridView;
-
-    private Button mSelectOkButton;
-    private Button mSelectCancelButton;
-
-    private ArrayList<KanjiData> mKanjiList = new ArrayList<>();
-    private ArrayList<KanjiData> mSelectedKanjiList = new ArrayList<>();
-
-    private KanjiAdapter kanjiAdapter;
-
-    private KanjiDataContainer kanjiDataContainer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_words);
 
+        kanjiDataContainer.parseKanjiData(this);
+
         setLayout();
         setListeners();
-        findKanjiList();
         updateUi();
     }
 
@@ -108,15 +112,31 @@ public class SelectWordsActivity extends AppCompatActivity implements AdapterVie
     private void setListeners() {
         mKanjiGridView.setOnItemClickListener(this);
         mKanjiGridView.setOnItemLongClickListener(this);
-    }
 
-    private void findKanjiList() {
-        kanjiDataContainer = new KanjiDataContainer(this);
-        mKanjiList = kanjiDataContainer.getKanjiData();
+        mSelectOkButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        mSelectCancelButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SelectWordsActivity.this);
+            builder.setTitle("教えて上げる");
+            builder.setMessage("本当にキャンセルするつもりですか");
+
+            builder.setPositiveButton("예아!", (dialog, which) -> {
+                quizManager.resetKanjiIndices();
+                finish();
+            });
+            builder.setNegativeButton("안된다!", (dialog, which) -> dialog.dismiss());
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
     }
 
     private void updateUi() {
-        kanjiAdapter = new KanjiAdapter(this, R.layout.gridview_item, mKanjiList);
+        kanjiAdapter = new KanjiAdapter(this, R.layout.gridview_item, kanjiDataContainer.getAllKanjiData());
         mKanjiGridView.setAdapter(kanjiAdapter);
     }
 }

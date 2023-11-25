@@ -6,7 +6,6 @@ import android.content.Context;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,22 +15,27 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class KanjiDataContainer {
-    private Context mContext;
+    private final ArrayList<KanjiData> mKanjiData = new ArrayList<>();
 
-    private ArrayList<KanjiData> mKanjiData = new ArrayList<>();
+    private static final KanjiDataContainer instance = new KanjiDataContainer();
 
-    public KanjiDataContainer(Context context) {
-        mContext = context;
-
-        parseKanjiData();
+    private KanjiDataContainer() {
     }
 
-    public ArrayList<KanjiData> getKanjiData() {
+    public static KanjiDataContainer getInstance() {
+        return instance;
+    }
+
+    public ArrayList<KanjiData> getAllKanjiData() {
         return mKanjiData;
     }
 
-    public void parseKanjiData() {
-        InputStream inputStream = mContext.getResources().openRawResource(R.raw.kanji);
+    public KanjiData getKanjiData(int index) {
+        return mKanjiData.get(index);
+    }
+
+    public void parseKanjiData(Context context) {
+        InputStream inputStream = context.getResources().openRawResource(R.raw.kanji);
 
         try {
             OPCPackage pkg = OPCPackage.open(inputStream);

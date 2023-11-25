@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="question_size">30dp</dimen>
-    <dimen name="answer_size">20dp</dimen>
+    <dimen name="question_size">40dp</dimen>
+    <dimen name="answer_size">30dp</dimen>
     <dimen name="result_size">30dp</dimen>
 
     <dimen name="padding_answers">20dp</dimen>
